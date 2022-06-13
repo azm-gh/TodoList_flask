@@ -1,0 +1,52 @@
+
+{%set active_page = "viewlist" %}
+{% extends 'base.html' %}
+
+{% block head %}
+
+    <title>Edit List</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/viewlist.css') }}">
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="container-sm mt-4 centered">
+        <h1 class= "MainHeading">{{todolist.name}}</h1>
+        <p>add some things to your list</p>
+
+        <input placeholder="Add an item to your todo list" id="NewItemInput">
+        <button class="btn btn-success ml-4" id="AddItem">Add Item</button>
+        
+        <ul id="TodoList">
+            {% for item in todolist.items %}
+                <li>
+                    <div class="item-value" id="{{item.id}}">{{item.description}}</div>
+
+                    <div style="display:none" class="edit-item" id="EDIT-{{item.id}}">
+                        <input id="INPUT-{{item.id}}" class="todo-item" value="">
+                        <button id="SAVE-{{item.id}}" class="btn btn-primary">Save</button>
+                        <button id="CANCEL-{item.id}}" class="btn btn-danger"> Cancel</button>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        
+        <script>
+            $("#AddItem").click(function(){
+                var NewItemDesciption = $("#NewItemInput").val()
+                window.location.href="{{ url_for('routes.addItem', listid=todolist.id, item='') }}"+NewItemDesciption
+            })
+            
+            $(".item-value").click(function(){
+               
+                var itemDescriptionEle = $(this)
+                var itemNum = itemDescriptionEle.attr('id')
+                var itemChangeEle = $("#input-"+itemNum)
+
+                
+            })
+
+        </script>
+    </div>
+{% endblock %}
